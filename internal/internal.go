@@ -21,6 +21,7 @@ import (
 	"unicode"
 
 	"github.com/alecthomas/units"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
 const alphanum string = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -330,11 +331,30 @@ func ParseTimestamp(format string, timestamp interface{}, location string) (time
 	switch format {
 	case "unix", "unix_ms", "unix_us", "unix_ns":
 		return parseUnix(format, timestamp)
+	case "excel":
+		return parseExcelTime(timestamp)
 	default:
 		if location == "" {
 			location = "UTC"
 		}
 		return parseTime(format, timestamp, location)
+	}
+}
+
+func parseExcelTime(timestamp interface{}) (time.Time, error) {
+	switch ts := timestamp.(type) {
+	case string:
+		f, err := strconv.ParseFloat(ts, 64)
+
+		if err != nil {
+			return time.Unix(0,0), err
+		}
+
+		return excelize.ExcelDateToTime(f, false)
+	case float64: 
+		return excelize.ExcelDateToTime(ts, false)
+	default:
+		return time.Unix(0,0), errors.New("unsupported type: float expected")	
 	}
 }
 
