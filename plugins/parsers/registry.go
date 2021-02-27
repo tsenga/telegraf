@@ -139,6 +139,7 @@ type Config struct {
 	CSVDelimiter         string   `toml:"csv_delimiter"`
 	CSVHeaderRowCount    int      `toml:"csv_header_row_count"`
 	CSVMeasurementColumn string   `toml:"csv_measurement_column"`
+	CSVNoInt             bool     `toml:"csv_no_int"`
 	CSVSkipColumns       int      `toml:"csv_skip_columns"`
 	CSVSkipRows          int      `toml:"csv_skip_rows"`
 	CSVTagColumns        []string `toml:"csv_tag_columns"`
@@ -218,6 +219,7 @@ func NewParser(config *Config) (Parser, error) {
 			ColumnNames:       config.CSVColumnNames,
 			ColumnTypes:       config.CSVColumnTypes,
 			TagColumns:        config.CSVTagColumns,
+			NoInt:             config.CSVNoInt,
 			MeasurementColumn: config.CSVMeasurementColumn,
 			TimestampColumn:   config.CSVTimestampColumn,
 			TimestampFormat:   config.CSVTimestampFormat,

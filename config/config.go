@@ -1324,6 +1324,7 @@ func (c *Config) getParserConfig(name string, tbl *ast.Table) (*parsers.Config, 
 	c.getFieldString(tbl, "csv_timezone", &pc.CSVTimezone)
 	c.getFieldString(tbl, "csv_delimiter", &pc.CSVDelimiter)
 	c.getFieldString(tbl, "csv_comment", &pc.CSVComment)
+	c.getFieldBool(tbl, "csv_no_int", &pc.CSVNoInt)
 	c.getFieldString(tbl, "csv_measurement_column", &pc.CSVMeasurementColumn)
 	c.getFieldString(tbl, "csv_timestamp_column", &pc.CSVTimestampColumn)
 	c.getFieldString(tbl, "csv_timestamp_format", &pc.CSVTimestampFormat)
@@ -1424,6 +1425,7 @@ func (c *Config) missingTomlField(typ reflect.Type, key string) error {
 	case "alias", "carbon2_format", "collectd_auth_file", "collectd_parse_multivalue",
 		"collectd_security_level", "collectd_typesdb", "collection_jitter", "csv_column_names",
 		"csv_column_types", "csv_comment", "csv_delimiter", "csv_header_row_count",
+		"csv_no_int",
 		"csv_measurement_column", "csv_skip_columns", "csv_skip_rows", "csv_tag_columns",
 		"csv_timestamp_column", "csv_timestamp_format", "csv_timezone", "csv_trim_space", "csv_skip_values",
 		"data_format", "data_type", "delay", "drop", "drop_original", "dropwizard_metric_registry_path",
