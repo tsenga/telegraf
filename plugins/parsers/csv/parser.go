@@ -24,6 +24,7 @@ type Config struct {
 	HeaderRowCount    int      `toml:"csv_header_row_count"`
 	MeasurementColumn string   `toml:"csv_measurement_column"`
 	MetricName        string   `toml:"metric_name"`
+	NoInt             bool     `toml:"csv_no_int"`
 	SkipColumns       int      `toml:"csv_skip_columns"`
 	SkipRows          int      `toml:"csv_skip_rows"`
 	TagColumns        []string `toml:"csv_tag_columns"`
@@ -253,7 +254,7 @@ outer:
 			}
 
 			// attempt type conversions
-			if iValue, err := strconv.ParseInt(value, 10, 64); err == nil {
+			if iValue, err := strconv.ParseInt(value, 10, 64); !p.NoInt && err == nil {
 				recordFields[fieldName] = iValue
 			} else if fValue, err := strconv.ParseFloat(value, 64); err == nil {
 				recordFields[fieldName] = fValue
